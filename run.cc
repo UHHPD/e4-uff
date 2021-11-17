@@ -104,7 +104,7 @@ int main() {
 
 
   //2c
-  Data datAll = datA + datB; // + datC + datD;
+  Data datAll = datA + datB + datC + datD;
   std::cout << "chi^2/ndf for all data: " << datAll.chi_ndf() << std::endl;
   return 0;
 }

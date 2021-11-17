@@ -72,7 +72,10 @@ int Data::checkCompatibility(const Data &in, int n)
 
 Data Data::operator+(const Data &A)
 {
-  Data res;
+  // use implicit copy constructor out of lazyness
+  Data res(A);
+  res.m_data.clear();
+  res.m_error.clear();
   for (int i = 0; i < m_data.size(); i++)
   {
     double y1 = m_data[i];
