@@ -69,8 +69,9 @@ int main() {
   Data datB("exp_B");
   Data datC("exp_C");
   Data datD("exp_D");
-  
+
   std::vector<Data> data({datA, datB, datC, datD});
+  std::vector<std::string> name({"A", "B", "C", "D"});
 
   // here is the data from experiment A
   std::cout << "bin 27: from " << datA.binLow(27) << " to " << datA.binHigh(27)
@@ -84,5 +85,26 @@ int main() {
   std::cout << "measurement of experiment D in bin 27: " << datD.measurement(27)
        << std::endl;
 
+  std::cout << "expected deviations for 2 sd: " << 56 * (1 - 0.9545) << std::endl;
+  std::cout << "expected deviations for 3 sd: " << 56 * (1 - 0.9973) << std::endl;
+
+  // 2a
+  for (int i = 0; i < data.size(); i++){
+    for (int j = i+1; j < data.size(); j++){
+      std::cout << data[i].checkCompatibility(data[j], 2) << " datapoints differ 2 sd comparing " << name[i] << " & " << name[j] << std::endl;
+      std::cout << data[i].checkCompatibility(data[j], 3) << " datapoints differ 3 sd comparing " << name[i] << " & " << name[j] << std::endl;
+    }
+  }
+
+  //2b
+  for (int i = 0; i < data.size(); i++){
+    std::cout << "chi^2/ndf of " << name[i] << " = " << data[i].chi_ndf() << std::endl;
+  }
+  std::cout << "Data is not compatible for |chi^2/ndf - 1| >> 0" << std::endl;
+
+
+  //2c
+  Data datAll = datA + datB; // + datC + datD;
+  std::cout << "chi^2/ndf for all data: " << datAll.chi_ndf() << std::endl;
   return 0;
 }
